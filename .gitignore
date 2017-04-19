@@ -45,3 +45,20 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Media #
+############
+*.mp3
+*.mp4
+*.ogg
+*.ogv
+*.webm
+
+# Custom #
+*.jpg
+*.png
+*.gif
+*.ico
+*.svg
+*.pdf
+
