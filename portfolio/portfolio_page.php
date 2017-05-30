@@ -1,4 +1,26 @@
 <?php require_once 'includes/initialize.php'; ?>
+<?php
+  // Get the `id` from the URL parameter.
+  $id = isset($_GET['id']) ? $_GET['id'] : null;
+
+  // If no parameter is provided, redirect to the home page.
+  if (!$id) redirect_to('index.html');
+  else {
+    // Parameter is provided.
+    // Look for a matching ID in the database.
+    $query = 'SELECT * ';
+    $query .= 'FROM courses ';
+    $query .= "WHERE id = '{$id}' ";
+    $query .= 'LIMIT 1';
+
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+      die('Database query failed.');
+    }
+
+  }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +48,7 @@
 
 			<ul id="menu">
 				<li><a href="index.html">HOME</a></li>
-				<li><a href="#nav_select">PORTFOLIO</a></li>
+				<li><a href="portfolio.php">PORTFOLIO</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -57,111 +79,103 @@
 	<nav class="nav_bar_page">
 		<ul>
 			<li><a href="index.html">Home</a></li>
-			<li><a href="portfolio.html">Portfolio</a></li>
+			<li><a href="portfolio.php">Portfolio</a></li>
 		</ul>
 	</nav>
 
-	<!-- Background picture for portfolio page -->
-	<div class="hidden_page">
-		<picture>
-			<source media="(min-width: 960px)"
-			sizes="100vh"
-			class="home_img" 
-			srcset="image/port_l.jpg 960w">
+	<!-- Portfolio Details -->
+	<div id="portfolio_1" class="nav_shift"></div>
 
-			<source media="(min-width: 666px)"
-			sizes="100vh"
-			class="home_img" 
-			srcset="image/port_m.jpg 666w">
+	<?php
+      while ($course = mysqli_fetch_assoc($result)) {
+    ?>
 
-			<img src="image/port_m.jpg" alt="mountain background"
-			sizes="100vh"
-			class="home_img" 
-			srcset="image/port_m.jpg 320w">
-		</picture>
-	</div>
+	<div class="full_width back_white">
+		<div class="wrapper">
 
-	<!-- Text for portfolio page -->
-	<div class="home_page">
-		<div class="title_box">
-			<h1>Welcome to My Portfolio Page</h1>
-			<div class="underline_2"></div>
-			<p>Discover all my previous works and projects</p>
-			<a href="#nav_select">View Portfolio</a>
+			<div class="wrap_half full_width img_align">
+				<img class="portfolio_img" src="<?php echo $course['courseImageLarge']; ?>" alt="<?php echo $course['courseTitle']; ?>">
+			</div>
+
+			<div class="wrap_half">
+				<div class="title"> <!-- Section title -->
+					<h2><?php echo $course['courseTitle']; ?></h2>
+				</div>
+				<div class="info_icon">
+					<ul>
+						<li class="date_icon"><p><?php echo $course['courseDate']; ?></p></li>
+						<li class="ctg_icon"><p><?php echo $course['courseCategory']; ?></p></li>
+					</ul>
+				</div>
+				<div class="underline"></div>
+				<p class="portfolio_text"><?php echo $course['courseDetails']; ?>
+				</p>
+			</div>
+
 		</div>
 	</div>
 
-	<!-- Portfolio Category Selection -->
-	<div id="nav_select" class="nav_shift"></div>
-	<nav class="nav_select_menu">
-		<ul>
-			<li><a href="#">Logo Design</a></li>
-			<li><a href="#">Graphic Design</a></li>
-			<li><a href="#">Engineering</a></li>
-			<li><a href="#">Misc</a></li>
-		</ul>
-	</nav>
+	<?php
+	  $grabCategory = $course['courseCategory'];
+      } // end while
+      mysqli_free_result($result);
+    ?>
+
 	<div class="underline_3">
 		<div class="underline_3_1"></div>
 	</div>
 
-	<!-- Portfolio Section -->
+
+	<!-- Other Portfolio -->
+
+	<?php
+    // Look for a matching ID in the database.
+    $query = 'SELECT * ';
+    $query .= 'FROM courses ';
+    $query .= "WHERE courseCategory = '{$grabCategory}' ";
+    $query .= 'LIMIT 3';
+
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+      die('Database query failed.');
+    }
+    
+    ?>
+
 	<div class="full_width back_white">
-		<div class="wrapper portfolio_padding">
+		<div class="wrapper">
+
+			<div class="title"> <!-- Section title -->
+				<h2>Related portfolio.</h2>
+				<div class="underline"></div>
+			</div>
 
 			<div class="wrapper_boxs">
 
-				<div class="boxs_port box_port1">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/ecfest.jpg" alt="ECFEST 2015">
+				<?php
+				while ($course = mysqli_fetch_assoc($result)) {
+					if ($course['courseVisible'] == 1) {
+				?>
+
+				<div class="boxs_port">
+					<a href="portfolio_page.php?id=<?php echo $course['id']; ?>">
+						<img src="<?php echo $course['courseImageSmall']; ?>" alt="<?php echo $course['courseTitle']; ?>">
 						<div class="text_wrap_port">
-						<p>East Coast Festival (ECFEST) - Logo Design</p>
+							<p><?php echo $course['courseTitle']; ?></p>
 						</div>
 					</a>
 				</div>
 
-				<div class="boxs_port box_port2">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/usepic.jpg" alt="US-EPIC">
-						<div class="text_wrap_port">
-							<p>US East Coast Presidential Council (US-EPIC)</p>
-						</div>
-					</a>
-				</div>
-
-				<div class="boxs_port box_port3">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/usmkle.jpg" alt="usmkle">
-						<div class="text_wrap_port">
-							<p>USM-KLE School of Medicine Logo Design</p>
-						</div>
-					</a>
-				</div>
-
-				<div class="boxs_port box_port4">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/mas_us.jpg" alt="60th Anniversary of Malaysia and the US Diplomatic Relations">
-						<div class="text_wrap_port">
-							<p>60th Anniversary of Malaysia and the US Diplomatic Relations</p>
-						</div>
-					</a>
-				</div>
-
-				<div class="boxs_port box_port5">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/tidoq.jpg" alt="tidoq.com">
-						<div class="text_wrap_port">
-							<p>Tidoq.com Website Development</p>
-						</div>
-					</a>
-				</div>
-
-				<div class="boxs_port box_port6">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/sdm.jpg" alt="SDM Tech Consulting">
-						<div class="text_wrap_port">
-							<p>SDM Tech IT Consulting - Logo Design</p>
-						</div>
+				<?php
+        		  } // end if
+       			 } // end while
+       	 		mysqli_free_result($result);
+        		?>
+	
+				<div class="boxs_viewport">
+					<a href="portfolio.php">
+						view all
 					</a>
 				</div>
 

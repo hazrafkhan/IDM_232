@@ -57,7 +57,7 @@
 	<nav class="nav_bar_page">
 		<ul>
 			<li><a href="index.html">Home</a></li>
-			<li><a href="portfolio.html">Portfolio</a></li>
+			<li><a href="portfolio.php">Portfolio</a></li>
 		</ul>
 	</nav>
 
@@ -111,60 +111,37 @@
 
 			<div class="wrapper_boxs">
 
-				<div class="boxs_port box_port1">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/ecfest.jpg" alt="ECFEST 2015">
+				<?php
+				$query = 'SELECT * ';
+				$query .= 'FROM courses ';
+				$query .= 'ORDER BY id ASC';
+
+				$result = mysqli_query($connection, $query);
+
+				if (!$result) {
+					die('Database query failed.');
+				}
+
+				while ($course = mysqli_fetch_assoc($result)) {
+					if ($course['courseVisible'] == 1) {
+				?>
+
+				<div class="boxs_port">
+					<a href="portfolio_page.php?id=<?php echo $course['id']; ?>">
+						<img src="<?php echo $course['courseImageSmall']; ?>" alt="<?php echo $course['courseTitle']; ?>">
 						<div class="text_wrap_port">
-						<p>East Coast Festival (ECFEST) - Logo Design</p>
+							<p><?php echo $course['courseTitle']; ?></p>
 						</div>
 					</a>
 				</div>
 
-				<div class="boxs_port box_port2">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/usepic.jpg" alt="US-EPIC">
-						<div class="text_wrap_port">
-							<p>US East Coast Presidential Council (US-EPIC)</p>
-						</div>
-					</a>
-				</div>
+				<?php
+        		  } // end if
+       			 } // end while
+       	 		mysqli_free_result($result);
+        		?>
 
-				<div class="boxs_port box_port3">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/usmkle.jpg" alt="usmkle">
-						<div class="text_wrap_port">
-							<p>USM-KLE School of Medicine Logo Design</p>
-						</div>
-					</a>
-				</div>
-
-				<div class="boxs_port box_port4">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/mas_us.jpg" alt="60th Anniversary of Malaysia and the US Diplomatic Relations">
-						<div class="text_wrap_port">
-							<p>60th Anniversary of Malaysia and the US Diplomatic Relations</p>
-						</div>
-					</a>
-				</div>
-
-				<div class="boxs_port box_port5">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/tidoq.jpg" alt="tidoq.com">
-						<div class="text_wrap_port">
-							<p>Tidoq.com Website Development</p>
-						</div>
-					</a>
-				</div>
-
-				<div class="boxs_port box_port6">
-					<a href="portfolio_page.html">
-						<img src="image/portfolio/sdm.jpg" alt="SDM Tech Consulting">
-						<div class="text_wrap_port">
-							<p>SDM Tech IT Consulting - Logo Design</p>
-						</div>
-					</a>
-				</div>
-
+				
 			</div>
 
 		</div>
@@ -176,7 +153,7 @@
 		<a href="index.html"> Contact Me</a>
 	</div>
 
-	
+
 	<!-- Footer section -->
 	<div class="full_width back_white">
 		<div class="wrapper">
