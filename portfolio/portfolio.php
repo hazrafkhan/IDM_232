@@ -95,10 +95,10 @@
 	<div id="nav_select" class="nav_shift"></div>
 	<nav class="nav_select_menu">
 		<ul>
-			<li><a href="#">Logo Design</a></li>
-			<li><a href="#">Graphic Design</a></li>
-			<li><a href="#">Engineering</a></li>
-			<li><a href="#">Misc</a></li>
+			<li><a class="coloring active" href="#nav_select">Logo Design</a></li>
+			<li><a class="coloring" href="#nav_select">Graphic Design</a></li>
+			<li><a class="coloring" href="#nav_select">Engineering</a></li>
+			<li><a class="coloring" href="#nav_select">Misc</a></li>
 		</ul>
 	</nav>
 	<div class="underline_3">

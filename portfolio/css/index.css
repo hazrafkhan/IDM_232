@@ -812,6 +812,10 @@ textarea {
   color: #c5c9d2;
 }
 
+.active{
+  color: red !important;
+}
+
 
 /* Portfolio Thumbnails */
 

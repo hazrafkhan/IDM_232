@@ -46,3 +46,10 @@ jQuery(function($) {
     });
 
 });
+
+$(function() {
+    $("a.coloring").on("click", function() {
+        $(".coloring.active").removeClass("active");
+        $(this).addClass("active");
+    }); 
+});
