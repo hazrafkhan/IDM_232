@@ -94,11 +94,11 @@
 	<!-- Portfolio Category Selection -->
 	<div id="nav_select" class="nav_shift"></div>
 	<nav class="nav_select_menu">
-		<ul>
-			<li><a class="coloring active" href="#nav_select">Logo Design</a></li>
-			<li><a class="coloring" href="#nav_select">Graphic Design</a></li>
-			<li><a class="coloring" href="#nav_select">Engineering</a></li>
-			<li><a class="coloring" href="#nav_select">Misc</a></li>
+		<ul class="toggles">
+			<li><a id="All" class="coloring active" href="#nav_select">Show All</a></li>
+			<li><a id="Design" class="coloring" href="#nav_select">Graphic Design</a></li>
+			<li><a id="Engineering" class="coloring" href="#nav_select">Engineering</a></li>
+			<li><a id="Misc" class="coloring" href="#nav_select">Misc</a></li>
 		</ul>
 	</nav>
 	<div class="underline_3">
@@ -109,7 +109,7 @@
 	<div class="full_width back_white">
 		<div class="wrapper portfolio_padding">
 
-			<div class="wrapper_boxs">
+			<div class="wrapper_boxs posts">
 
 				<?php
 				$query = 'SELECT * ';
@@ -126,7 +126,7 @@
 					if ($course['courseVisible'] == 1) {
 				?>
 
-				<div class="boxs_port">
+				<div class="boxs_port post <?php echo $course['courseCategory']; ?>">
 					<a href="portfolio_page.php?id=<?php echo $course['id']; ?>">
 						<img src="<?php echo $course['courseImageSmall']; ?>" alt="<?php echo $course['courseTitle']; ?>">
 						<div class="text_wrap_port">
